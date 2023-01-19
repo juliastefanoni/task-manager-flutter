@@ -13,6 +13,21 @@ class Task extends StatefulWidget {
 
 class _TaskState extends State<Task> {
   int nivel = 0;
+  Color color = Colors.blue;
+  int expertise = -1;
+
+  void checkIfIsDone() {
+    double level = (nivel / widget.dificuldade) / 10;
+    List<Color> colors = [Colors.green, Colors.red, Colors.purple, Colors.pink];
+
+    if (level >= 1) {
+      nivel = 0;
+      expertise++;
+      if (expertise < colors.length) {
+        color = colors[expertise];
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +37,7 @@ class _TaskState extends State<Task> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4), color: Colors.blue),
+                  borderRadius: BorderRadius.circular(4), color: color),
               height: 140,
             ),
             Column(
@@ -67,6 +82,7 @@ class _TaskState extends State<Task> {
                           onPressed: () {
                             setState(() {
                               nivel++;
+                              checkIfIsDone();
                             });
                           },
                           child: Column(
